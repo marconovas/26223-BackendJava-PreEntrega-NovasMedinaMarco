@@ -1,6 +1,8 @@
 package com.techlab.model;
 
-public abstract class Articulo {
+import com.techlab.articulo.interfaces.Calculable;
+
+public abstract class Articulo implements  Calculable{
 
     private int codigo;
     private String nombre;

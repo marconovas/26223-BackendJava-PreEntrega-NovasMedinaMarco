@@ -14,6 +14,17 @@ public class ArticuloElectronico extends Articulo {
         return this.garantiaMeses;
     }
 
+    //SETTERS
+    public void setGarantiaMeses(int garantiaMeses) {
+        if(garantiaMeses < 0) {
+            System.out.println("La cantidad de meses no puede ser menor a 0!.");
+            return;
+        }
+
+        this.garantiaMeses = garantiaMeses;
+    }
+
+    //MÉTODOS
     @Override 
     public String getTipoArticulo() {
         return "Electrónico";
@@ -24,14 +35,13 @@ public class ArticuloElectronico extends Articulo {
         return "Garantía= " + this.garantiaMeses + " meses.";
     }
 
-    //SETTERS
-    public void setGarantiaMeses(int garantiaMeses) {
-        if(garantiaMeses < 0) {
-            System.out.println("La cantidad de meses no puede ser menor a 0!.");
-            return;
+    @Override 
+    public double calcularPrecioFinal() {
+        if(garantiaMeses > 12) {
+            return getPrecio() * 1.10;
         }
 
-        this.garantiaMeses = garantiaMeses;
+        return getPrecio();
     }
 
 }
