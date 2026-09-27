@@ -14,6 +14,12 @@ public abstract class Articulo {
         this.categoria = categoria;
     }
 
+    @Override 
+    public String toString() {
+        return "codigo= " + this.codigo + ", nombre= " + this.nombre +
+        ", precio = " + this.precio + ", categoria= " + this.categoria + ".";
+    }
+
     //GETTERS
     public int getCodigo() {
         return this.codigo;
