@@ -1,6 +1,7 @@
 package com.techlab.model;
 
-public class Articulo {
+public abstract class Articulo {
+
     private int codigo;
     private String nombre;
     private double precio;
@@ -29,6 +30,10 @@ public class Articulo {
     public Categoria getCategoria() {
         return this.categoria;
     }
+
+    public abstract String getTipoArticulo();
+
+    protected abstract String getDetalleEspecifico();
 
     //SETTERS
     public void setCodigo(int codigo) {
