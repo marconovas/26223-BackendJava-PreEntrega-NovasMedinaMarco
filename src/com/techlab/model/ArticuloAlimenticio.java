@@ -14,6 +14,17 @@ public class ArticuloAlimenticio extends Articulo {
         return this.diasVencimiento;
     }
 
+    //SETTERS
+    public void setDiasVencimiento(int diasVencimiento) {
+        if(diasVencimiento < 0) {
+            System.out.println("Los dias de vencimiento no pueden ser negativos!.");
+            return;
+        }
+
+        this.diasVencimiento = diasVencimiento;
+    }
+
+    //MÉTODOS
     @Override 
     public String getTipoArticulo() {
         return "Alimenticio";
@@ -23,14 +34,19 @@ public class ArticuloAlimenticio extends Articulo {
     protected String getDetalleEspecifico() {
         return "Días hasta vencimiento= " + this.diasVencimiento + " días.";
     }
+    
+    @Override 
+    public double calcularPrecioFinal() {
+        if(diasVencimiento <= 3) {
 
-    //SETTERS
-    public void setDiasVencimiento(int diasVencimiento) {
-        if(diasVencimiento < 0) {
-            System.out.println("Los dias de vencimiento no pueden ser negativos!.");
-            return;
+            return getPrecio() * 0.80;
+        
+        } else if (diasVencimiento <= 7) {
+        
+            return getPrecio() * 0.90;
+        
         }
 
-        this.diasVencimiento = diasVencimiento;
+        return getPrecio();
     }
 }
