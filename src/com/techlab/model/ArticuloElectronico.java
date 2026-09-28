@@ -31,7 +31,7 @@ public class ArticuloElectronico extends Articulo {
     }
 
     @Override 
-    public String getDetalleEspecifico() {
+    protected String getDetalleEspecifico() {
         return "Garantía= " + this.garantiaMeses + " meses.";
     }
 

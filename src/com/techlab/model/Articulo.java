@@ -18,8 +18,8 @@ public abstract class Articulo implements  Calculable{
 
     @Override 
     public String toString() {
-        return "codigo= " + this.codigo + ", nombre= " + this.nombre +
-        ", precio = " + this.precio + ", categoria= " + this.categoria + ".";
+        return "Tipo: " + getTipoArticulo() + "codigo= " + this.codigo + ", nombre= " + this.nombre +
+        ", precio = " + this.precio + ", categoria= " + this.categoria + ", " + getDetalleEspecifico();
     }
 
     //GETTERS
@@ -64,6 +64,7 @@ public abstract class Articulo implements  Calculable{
 
     public void setPrecio(double precio) {
         if(precio < 0) {
+            System.out.println("El precio no puede ser negativo.");
             return;
         }
 
