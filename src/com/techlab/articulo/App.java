@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.techlab.model.Articulo;
-import com.techlab.model.ArticuloAlimenticio;
-import com.techlab.model.ArticuloElectronico;
 import com.techlab.model.Categoria;
+import com.techlab.service.ArticuloService;
 
 public class App {
     public static void main(String[] args) {
+
+        ArticuloService articuloService = new ArticuloService();
 
         Scanner sc = new Scanner(System.in);
 
@@ -25,26 +26,24 @@ public class App {
         do{
             mostrarMenu();
 
-            opcion = sc.nextInt();
-            sc.nextLine();
+            opcion = formatearEntero(sc, "Seleccione una opción: ");
 
             switch(opcion) {
                 case 1:
 
-                    crearArticulo(articulos, categorias, sc);
+                    articuloService.crearArticulo(articulos, categorias, sc);
                     break;
 
                 case 2:
 
-                    listarArticulos(articulos);
+                    articuloService.listarArticulos(articulos);
                     break;
 
                 case 3:
 
-                    System.out.println("Ingrese artícul a buscar: ");
-                    String articuloBuscado = sc.nextLine();
+                    String articuloBuscado = leerTextoNovacio(sc, "Ingrese artículo a buscar: ");
                     
-                    Articulo articuloEncontrado = buscarArticuloPorNombre(articulos, articuloBuscado);
+                    Articulo articuloEncontrado = articuloService.buscarArticuloPorNombre(articulos, articuloBuscado);
 
                     if(articuloEncontrado == null) {
                         System.out.println("El articulo ingresado no existe.");
@@ -57,15 +56,9 @@ public class App {
 
                 case 4:
 
-                    System.out.println("ingrese articulo a modificar: ");
-                    String articuloABuscar = sc.nextLine();
+                    int codigoArticuloBuscado = formatearEntero(sc, "Ingrese el código del articulo a modificar: ");
 
-                    if(articuloABuscar.trim().isBlank()) {
-                        System.out.println("El nombre del articulo a buscar no debe estar vacío.");
-                        break;
-                    }
-
-                    Articulo nuevoArticulo = actualizarArticuloPorNombre(sc, articulos, articuloABuscar);
+                    Articulo nuevoArticulo = articuloService.actualizarArticuloPorCodigo(sc, articulos, codigoArticuloBuscado);
 
                     if(nuevoArticulo != null) {
                         System.out.println("Articulo modificado exitosamente.");
@@ -75,10 +68,9 @@ public class App {
 
                 case 5:
 
-                    System.out.println("Ingrese artículo a eliminar: ");
-                    String nombreArticulo = sc.nextLine();
+                    int codigoArticulo = formatearEntero(sc, "Ingrese el código del artículo a eliminar: ");
 
-                    boolean eliminado = eliminarArticulo(articulos, nombreArticulo);
+                    boolean eliminado = articuloService.eliminarArticulo(articulos, codigoArticulo);
 
                     if(eliminado) {
                         System.out.println("Articulo eliminado exitosamente.");
@@ -98,7 +90,7 @@ public class App {
 
         sc.close();
     }
-
+    
     //MOSTRAR MENU
     public static void mostrarMenu() {
         System.out.println("\n===== MENÚ =====");
@@ -111,137 +103,47 @@ public class App {
         System.out.print("Seleccione una opción: ");
     }
 
-    //LISTAR ARTICULOS
-    public static void listarArticulos(ArrayList<Articulo> articulos) {
-        for(Articulo articulo : articulos) {
-            System.out.println(articulo);
-        }
-    }
-
-    //BUSCAR ARTICULO POR NOMBRE
-    public static Articulo buscarArticuloPorNombre(ArrayList<Articulo> articulos, String articuloBuscado) {
-        for(Articulo articulo : articulos) {
-            if(articulo.getNombre().equalsIgnoreCase(articuloBuscado)) {
-                return articulo;
+    //FORMATO
+    public static int formatearEntero(Scanner scanner, String mensaje) {
+        while(true) {
+            try{
+                System.out.println(mensaje);
+                return Integer.parseInt(scanner.nextLine());
+            } catch(NumberFormatException e) {
+                System.out.println("Debe ingresar un número entero.");
             }
         }
-
-        return null;
     }
 
-    //ACTUALIZAR ARTICULO
-    public static Articulo actualizarArticuloPorNombre(Scanner scanner, ArrayList<Articulo> articulos, String articuloBuscado) {
+    public static Double formatearDouble(Scanner scanner, String mensaje) {
+        while(true) {
+            try{
+                System.out.println(mensaje);
+                double valor =  Double.parseDouble(scanner.nextLine());
 
-        Articulo articulo = buscarArticuloPorNombre(articulos, articuloBuscado);
+                if(valor < 0) {
+                    System.out.println("El valor ingresado No debe ser negativo");
+                    continue;
+                }
 
-        if(articulo == null) {
-            System.out.println("El articulo especificado no existe.");
-            return null;
-        }
+                return valor;
 
-        System.out.println("Ingrese nuevo nombre para el artículo: ");
-        String nuevoNombreArticulo = scanner.nextLine();
-
-        articulo.setNombre(nuevoNombreArticulo);
-
-        return articulo;
-    }
-
-    //ELIMINAR ARTICULO
-    public static boolean eliminarArticulo(ArrayList<Articulo> articulos, String nombreArticulo) {
-        Articulo articuloAEliminar = buscarArticuloPorNombre(articulos, nombreArticulo);
-
-        if(articuloAEliminar == null) {
-            System.out.println("El articulo especificado no existe.");
-            return false;
-        }
-
-        articulos.remove(articuloAEliminar);
-        return true;
-    }
-
-    //CREAR ARTICULO
-    public static void crearArticulo(ArrayList<Articulo> articulos, ArrayList<Categoria> categorias, Scanner sc) {
-        System.out.println("Ingrese código del artículo: ");
-        int codigo = sc.nextInt();
-        sc.nextLine();
-
-        //verificar si el codigo existe
-        if(buscarCodigoArticulo(articulos, codigo) != null) {
-            System.out.println("El articulo ya existe.");
-            return;
-        }
-
-        System.out.println("Ingrese nombre del artículo: ");
-        String nombre = sc.nextLine();
-
-        System.out.println("Ingrese precio del artículo: ");
-        double precio = sc.nextDouble();
-        sc.nextLine();
-
-        System.out.println("Ingrese Categoría del artículo: ");
-        String categoriaBuscada = sc.nextLine();
-
-        Categoria categoria = buscarCategoria(categorias, categoriaBuscada);
-
-        //verificar categoría existente
-        if(categoria == null) {
-            System.out.println("La categoria no existe.");
-            return;
-        }
-
-        System.out.println("Ingrese tipo del artículo a ingresar (1: electrónico | 2.Alimenticio): ");
-        int tipo = sc.nextInt();
-
-        if(tipo == 1) {
-            System.out.println("Ingrese garantía: ");
-            int garantia = sc.nextInt();
-
-            Articulo nuevoArticulo = new ArticuloElectronico(codigo, nombre, precio, categoria, garantia);
-            
-            articulos.add(nuevoArticulo);
-
-            System.out.println("Artículo creado exitsamente.");
-        }
-
-        else if(tipo == 2) {
-            System.out.println("Ingrese dias de vencimiento: ");
-            int vencimiento = sc.nextInt();
-
-            Articulo nuevoArticulo = new ArticuloAlimenticio(codigo, nombre, precio, categoria, vencimiento);
-            
-            articulos.add(nuevoArticulo);
-
-            System.out.println("Artículo creado exitosamente.");
-        }
-
-        else{
-            System.out.println("Debe ingresar el tipo especificado.");
-            return;
-        }
-
-    }
-
-    //BUSCAR ARTICULO POR CODIGO
-    public static Articulo buscarCodigoArticulo(ArrayList<Articulo> articulos, int codigo) {
-        for(Articulo articulo : articulos) {
-            if(articulo.getCodigo() == codigo) {
-                return articulo;
+            } catch(NumberFormatException e) {
+                System.out.println("Debe ingresar un número decimal.");
             }
         }
-
-        return null;
     }
 
-    //BUSCAR CATEGORIA POR NOMBRE
-    public static Categoria buscarCategoria(ArrayList<Categoria> categorias, String categoriaBuscada) {
+    public static String leerTextoNovacio(Scanner scanner, String mensaje) {
+        while(true) {
+            System.out.println(mensaje);
+            String texto = scanner.nextLine();
 
-        for(Categoria categoria : categorias) {
-            if(categoria.getNombre().equalsIgnoreCase(categoriaBuscada)) {
-                return categoria;
+            if(!texto.trim().isEmpty()) {
+                return texto.trim();
             }
-        }
 
-        return null;
+            System.out.println("El texto ingresado no puede estar en blanco.");
+        }
     }
 }
