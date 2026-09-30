@@ -6,11 +6,14 @@ import java.util.Scanner;
 import com.techlab.model.Articulo;
 import com.techlab.model.Categoria;
 import com.techlab.service.ArticuloService;
+import com.techlab.util.InputUtils;
+
 
 public class App {
     public static void main(String[] args) {
 
         ArticuloService articuloService = new ArticuloService();
+        InputUtils inputUtils = new InputUtils();
 
         Scanner sc = new Scanner(System.in);
 
@@ -26,7 +29,7 @@ public class App {
         do{
             mostrarMenu();
 
-            opcion = formatearEntero(sc, "Seleccione una opción: ");
+            opcion = inputUtils.formatearEntero(sc, "Seleccione una opción: ");
 
             switch(opcion) {
                 case 1:
@@ -41,7 +44,7 @@ public class App {
 
                 case 3:
 
-                    String articuloBuscado = leerTextoNovacio(sc, "Ingrese artículo a buscar: ");
+                    String articuloBuscado = inputUtils.leerTextoNovacio(sc, "Ingrese artículo a buscar: ");
                     
                     Articulo articuloEncontrado = articuloService.buscarArticuloPorNombre(articulos, articuloBuscado);
 
@@ -56,7 +59,7 @@ public class App {
 
                 case 4:
 
-                    int codigoArticuloBuscado = formatearEntero(sc, "Ingrese el código del articulo a modificar: ");
+                    int codigoArticuloBuscado = inputUtils.formatearEntero(sc, "Ingrese el código del articulo a modificar: ");
 
                     Articulo nuevoArticulo = articuloService.actualizarArticuloPorCodigo(sc, articulos, codigoArticuloBuscado);
 
@@ -68,7 +71,7 @@ public class App {
 
                 case 5:
 
-                    int codigoArticulo = formatearEntero(sc, "Ingrese el código del artículo a eliminar: ");
+                    int codigoArticulo = inputUtils.formatearEntero(sc, "Ingrese el código del artículo a eliminar: ");
 
                     boolean eliminado = articuloService.eliminarArticulo(articulos, codigoArticulo);
 
@@ -102,48 +105,5 @@ public class App {
         System.out.println("0. Salir");
         System.out.print("Seleccione una opción: ");
     }
-
-    //FORMATO
-    public static int formatearEntero(Scanner scanner, String mensaje) {
-        while(true) {
-            try{
-                System.out.println(mensaje);
-                return Integer.parseInt(scanner.nextLine());
-            } catch(NumberFormatException e) {
-                System.out.println("Debe ingresar un número entero.");
-            }
-        }
-    }
-
-    public static Double formatearDouble(Scanner scanner, String mensaje) {
-        while(true) {
-            try{
-                System.out.println(mensaje);
-                double valor =  Double.parseDouble(scanner.nextLine());
-
-                if(valor < 0) {
-                    System.out.println("El valor ingresado No debe ser negativo");
-                    continue;
-                }
-
-                return valor;
-
-            } catch(NumberFormatException e) {
-                System.out.println("Debe ingresar un número decimal.");
-            }
-        }
-    }
-
-    public static String leerTextoNovacio(Scanner scanner, String mensaje) {
-        while(true) {
-            System.out.println(mensaje);
-            String texto = scanner.nextLine();
-
-            if(!texto.trim().isEmpty()) {
-                return texto.trim();
-            }
-
-            System.out.println("El texto ingresado no puede estar en blanco.");
-        }
-    }
+    
 }
