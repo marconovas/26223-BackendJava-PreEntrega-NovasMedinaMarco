@@ -31,7 +31,7 @@ public class App {
 
             switch (opcion) {
                 case 1:
-                    menuArticulos(sc, inputUtils, articuloService, articulos, categorias); 
+                    menuArticulos(sc, inputUtils, articuloService, categoriaService, articulos, categorias);
                     break;
                 
                 case 2:
@@ -79,7 +79,7 @@ public class App {
         System.out.print("Seleccione una opción: ");
     }
 
-    public static void menuArticulos(Scanner sc, InputUtils inputUtils, ArticuloService articuloService, ArrayList<Articulo> articulos, ArrayList<Categoria> categorias) {
+    public static void menuArticulos(Scanner sc, InputUtils inputUtils, ArticuloService articuloService, CategoriaService categoriaService, ArrayList<Articulo> articulos, ArrayList<Categoria> categorias) {
         int opcion;
 
         do{
@@ -90,7 +90,7 @@ public class App {
             switch(opcion) {
                 case 1:
 
-                    articuloService.crearArticulo(articulos, categorias, sc);
+                    articuloService.crearArticulo(articulos, categorias, sc, categoriaService);
                     break;
 
                 case 2:
