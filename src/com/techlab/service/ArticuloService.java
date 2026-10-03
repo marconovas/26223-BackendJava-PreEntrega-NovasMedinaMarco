@@ -158,16 +158,5 @@ public class ArticuloService {
 
         return null;
     }
-
-    //BUSCAR CATEGORIA POR NOMBRE
-    public Categoria buscarCategoria(ArrayList<Categoria> categorias, String categoriaBuscada) {
-
-        for(Categoria categoria : categorias) {
-            if(categoria.getNombre().equalsIgnoreCase(categoriaBuscada)) {
-                return categoria;
-            }
-        }
-
-        return null;
-    }
+    
 }
