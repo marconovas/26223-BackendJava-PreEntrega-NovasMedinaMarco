@@ -82,6 +82,22 @@ public class CategoriaService {
         return null;
    }
 
+   public Categoria buscarCategoriaPorNombre(ArrayList<Categoria> categorias, String nombreCategoria) {
+        if(categorias.isEmpty()) {
+            System.out.println("No hay categorias ingresadas.");
+            return null;
+        }
+
+        for(Categoria categoria : categorias) {
+            if(categoria.getNombre().equalsIgnoreCase(nombreCategoria)){
+                return categoria;
+            }
+        }
+
+        return null;
+   }
+
+
    public boolean eliminarCategoria(ArrayList<Categoria> categorias, int codigo) {
         Categoria encontrada = buscarCategoriaPorCodigo(categorias, codigo);
 
