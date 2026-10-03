@@ -127,7 +127,7 @@ public class ArticuloService {
             
             articulos.add(nuevoArticulo);
 
-            System.out.println("Artículo creado exitsamente.");
+            System.out.println("Artículo creado exitosamente.");
         }
 
         else if(tipo == 2) {
