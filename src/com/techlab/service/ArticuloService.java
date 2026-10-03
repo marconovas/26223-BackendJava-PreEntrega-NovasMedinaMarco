@@ -87,7 +87,7 @@ public class ArticuloService {
     }
 
     //CREAR ARTICULO
-    public void crearArticulo(ArrayList<Articulo> articulos, ArrayList<Categoria> categorias, Scanner sc) {
+    public void crearArticulo(ArrayList<Articulo> articulos, ArrayList<Categoria> categorias, Scanner sc, CategoriaService categoriaService) {
         System.out.println("Ingrese código del artículo: ");
         int codigo = sc.nextInt();
         sc.nextLine();
@@ -108,7 +108,7 @@ public class ArticuloService {
         System.out.println("Ingrese Categoría del artículo: ");
         String categoriaBuscada = sc.nextLine();
 
-        Categoria categoria = buscarCategoria(categorias, categoriaBuscada);
+        Categoria categoria = categoriaService.buscarCategoriaPorNombre(categorias, categoriaBuscada);
 
         //verificar categoría existente
         if(categoria == null) {
