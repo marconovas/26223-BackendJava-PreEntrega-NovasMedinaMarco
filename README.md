@@ -1,18 +1,51 @@
-## Getting Started
+# Backend Java - E-commerce
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+## Estado del proyecto
 
-## Folder Structure
+**Pre-entrega**
 
-The workspace contains two folders by default, where:
+Proyecto de backend desarrollado en Java como parte del curso de **Back-End Java - Talento Tech**.
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+Actualmente se encuentra implementada la primera etapa del proyecto, centrada en la gestión de artículos y categorías mediante una aplicación de consola.
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
+## Funcionalidades implementadas
 
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
+### Gestión de artículos
 
-## Dependency Management
+- Crear artículos.
+- Listar artículos.
+- Buscar artículos.
+- Modificar artículos.
+- Eliminar artículos.
+- Asociar artículos con categorías.
 
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### Gestión de categorías
+
+- Crear categorías.
+- Listar categorías.
+- Buscar categorías.
+- Modificar categorías.
+- Eliminar categorías.
+
+## Ejecución
+
+Para ejecutar el proyecto:
+
+1. Clonar el repositorio.
+2. Abrir el proyecto en Visual Studio Code o en un IDE compatible con Java.
+3. Ejecutar la clase principal.
+4. Utilizar el menú de consola para acceder a las diferentes funcionalidades.
+
+## Menú principal
+
+El sistema permite acceder a las siguientes opciones:
+
+1. Gestión de artículos.
+2. Gestión de categorías.
+3. Salir.
+
+Desde cada sección se pueden realizar las operaciones correspondientes sobre los datos.
+
+## Autor
+
+**Marco Novas**
